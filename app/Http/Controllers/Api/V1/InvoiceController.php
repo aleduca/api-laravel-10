@@ -7,7 +7,6 @@ use App\Http\Resources\V1\InvoiceResource;
 use App\Models\Invoice;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends Controller
@@ -16,9 +15,14 @@ class InvoiceController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    return InvoiceResource::collection(Invoice::with('user')->get());
+    // return InvoiceResource::collection(Invoice::where([
+    //   ['value', '>', 5000],
+    //   ['paid', '=', 1]
+    // ])->with('user')->get());
+    // return InvoiceResource::collection(Invoice::with('user')->get());
+    return (new Invoice())->filter($request);
   }
 
   /**
